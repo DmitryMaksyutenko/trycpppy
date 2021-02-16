@@ -29,7 +29,9 @@ LOCALE_PATHS = (path.join(APPS_DIR, "locale"), )
 
 # Databases.
 # =====================================================================
-DATABASES = {}
+DATABASES = {
+    "default": env.db()
+}
 
 # URLs
 # =====================================================================
@@ -45,9 +47,10 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.staticfiles",
 
     # Project applications.
-    "Core"
+    "core"
 ]
 
 
@@ -79,6 +82,30 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+
+# CSS, JavaScrip, Images e.t.c.
+# =====================================================================
+STATIC_URL = "/static/"
+
+
+# Templates.
+# =====================================================================
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [str(APPS_DIR) + "/templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
 ]
 
 
