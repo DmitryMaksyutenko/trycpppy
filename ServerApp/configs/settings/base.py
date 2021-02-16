@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
 
     # Project applications.
+    "Core"
 ]
 
 
