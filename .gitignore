@@ -5,3 +5,6 @@ __pycache__/
 
 # Project.
 .env
+
+# Vim
+.swp
