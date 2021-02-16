@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Project applications.
-    "core"
+    "core",
+    "roles"
 ]
 
 

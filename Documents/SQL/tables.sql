@@ -49,5 +49,6 @@ CREATE TABLE author (
     description VARCHAR(132)    DEFAULT NULL,
     socials VARCHAR(132)[]      DEFAULT NULL,
 
-    PRIMARY KEY (author_id)
+    PRIMARY KEY (author_id),
+    FOREIGN KEY (id) REFERENCES User (id)
 );
