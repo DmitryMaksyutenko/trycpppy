@@ -1,0 +1,141 @@
+Create a single page application. A web blog-notebook.
+The main goal of which is a simple explanation of C++, Python
+program languages, and related themes. The articles
+answer the questions what for and how. It contains custom
+images and code examples. The client application must have
+a good UI design.
+The project must be easily extensible with additional new catigories.
+
+Means.
+Django, Django-REST-fraimwork, PostgreSQL, Vue.js, Vuex, bootstrap,
+nginx, gunicorn, pgbouncer.
+
+Define the actions for web application promotion.
+Find the ways to make money from the web application.
+
+
+Domain:
+By a domain from namecheap.com
+trycpppy.com 9$/yar.
+
+Cloud.
+DigitalOcean.com
+Basic Droplet 5$/month.
+
+
+CLIENT ----------------------------------------------------------
+
+Developing the different layouts depending on the device screen size.
+    Responsive Web Design.
+        320px — 480px: Mobile devices.
+        481px — 768px: iPads, Tablets.
+        769px — 1024px: Small screens, laptops.
+        1025px — 1200px: Desktops, large screens.
+        1201px and more —  Extra large scree.
+
+    Must look like a desktop.
+        Contains wallpaper with a logo image.
+        Contains panel.
+            Menu.
+                Search.
+                Theme.
+                Category 1.
+                    Subcategory 1.
+                        Article 1.
+                        Article 2.
+                        ...
+                    Subcategory 2.
+                        Article 1.
+                        Article 2.
+                        ...
+                    ...
+                Category 2.
+                    Subcategory 1.
+                        Article 1.
+                        Article 2.
+                        ...
+                    Subcategory 2.
+                        Article 1.
+                        Article 2.
+                        ...
+                    ...
+                ...
+                About.
+            Switching between loaded articles.
+                Articles list.
+        Contains Content window.
+            Image.
+            Text.
+            Code.
+            Close button.
+            Minimize button.
+
+
+Caching.
+    Using IndexedDB API for the cache.
+    Using the Web storage API for the cache.
+
+SERVER ----------------------------------------------------------
+
+Database schema development.
+    Implement the languages.
+    Implement the categories.
+    Implement the articles.
+    Implement the about.
+    Implement the author.
+    Implementation must be flexible and extensible.
+    Full-text search by words/phrases in the articles text.
+    Define the table relations.
+    Defining the indexes.
+
+Implementing the database via Django ORM.
+    Implementing the classes of models.
+
+Setting up the Django admin site:
+    Add/Edit/Delete a category.
+    Add/Edit/Delete a subcategory.
+    Add/Edit/Delete an article.
+        Add/Edit/Delete a text.
+        Add/Edit/Delete an image.
+        Add/Edit/Delete a code.
+    Sort by category.
+    Sort by subcategory.
+    Sort by alphabet.
+    Sort by publication date.
+    Search by word.
+
+Implementation of the business logic.
+    Menu.
+    Retrieving data from the database and sending it to the client.
+        Retrieving the list of languages.
+        Retrieving the list of categories.
+        Retrieving the list of articles from the subcategory.
+        Retrieving the article.
+        Retrieving the about.
+        Search by article title.
+        Search by words in the article text.
+        Sending a new article to LinkedIn and Facebook.
+    Cache.
+        Cache the main page with Django per-view cache.
+
+Using the Django-REST-framework implement the API.
+    URL path "/" Returned by Nginx.
+    URL path "python/categories/" Returns the JSON {"categories": ["category 1", "category 2", ...]}
+    URL path "python/category/articles/" Returns the JSON {"articles": ["title 1", "title 2", ...]}
+    URL path "python/category/article/some-title" Returns the JSON {"title": "some-title", "text": "...", "code": "...", "img": "..." }
+    URL path "cpp/categories/" Returns the JSON {"categories": ["category 1", "category 2", ...]}
+    URL path "cpp/category/articles/" Returns the JSON {"articles": ["title 1", "title 2", ...]}
+    URL path "cpp/category/article/some-title" Returns the JSON {"title": "some-title", "text": "...", "code": "...", "img": "..." }
+    URL path "about/" Returns the JSON {"fullname": "author-name", "socials": ["link 1", "link 2", ...], "email": "..."}
+    URL path "search/" Returns the JSON {"result": ["...", "...", ...]}
+
+Setting up the Django logging system.
+    CRITICAL.
+        DB connection. Sends email.
+    ERROR.
+        API connections. Sends email.
+    WARNING.
+        Authentication.
+    INFO.
+        General information.
+

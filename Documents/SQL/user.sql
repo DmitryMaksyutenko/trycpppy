@@ -1,0 +1,1 @@
+CREATE ROLE trycpppy_role WITH LOGIN CREATEDB;
