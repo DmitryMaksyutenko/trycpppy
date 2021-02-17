@@ -28,9 +28,9 @@ class Articles(CreatedUpdatedFields):
     """The table for articles."""
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
-    image = models.CharField(max_length=32, null=True)
-    content = SearchVectorField(null=True)
-    code = models.TextField(null=True)
+    image = models.CharField(max_length=32, null=True, blank=True)
+    content = SearchVectorField(null=True, blank=True)
+    code = models.TextField(null=True, blank=True)
     category_id = models.ForeignKey(Categories, on_delete=models.RESTRICT)
     author_id = models.ForeignKey(Author, on_delete=models.RESTRICT)
 
