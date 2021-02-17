@@ -9,3 +9,7 @@ class Author(models.Model):
     description = models.CharField(max_length=132, null=True, blank=True)
     social = models.CharField(max_length=132, null=True, blank=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        user = User.objects.get(pk=self.user_id.id)
+        return user.username

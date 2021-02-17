@@ -33,3 +33,6 @@ class Articles(CreatedUpdatedFields):
     code = models.TextField(null=True)
     category_id = models.ForeignKey(Categories, on_delete=models.RESTRICT)
     author_id = models.ForeignKey(Author, on_delete=models.RESTRICT)
+
+    def __str__(self) -> str:
+        return self.title
