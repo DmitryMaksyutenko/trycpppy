@@ -6,6 +6,6 @@ class Author(models.Model):
     """Model contains authors information."""
 
     author_id = models.AutoField(primary_key=True)
-    description = models.CharField(max_length=132, null=True)
-    social = models.CharField(max_length=132, null=True)
+    description = models.CharField(max_length=132, null=True, blank=True)
+    social = models.CharField(max_length=132, null=True, blank=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
