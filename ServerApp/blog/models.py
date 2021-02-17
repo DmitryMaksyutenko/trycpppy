@@ -27,7 +27,7 @@ class Categories(CreatedUpdatedFields):
 class Articles(CreatedUpdatedFields):
     """The table for articles."""
     article_id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=56, null=True)
+    title = models.CharField(max_length=56)
     image = models.CharField(max_length=32, null=True)
     content = SearchVectorField(null=True)
     code = models.TextField(null=True)
