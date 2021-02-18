@@ -21,13 +21,26 @@ class Categories(CreatedUpdatedFields):
     """The table for categories of articles for the languages."""
     category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=56)
-    languages = models.ManyToManyField(Languages)
+    languages = models.ManyToManyField(
+        Languages,
+        through="CategoriesLanguages"
+    )
 
     class Meta:
         ordering = ["name"]
 
     def __str__(self) -> str:
         return self.name
+
+
+class CategoriesLanguages(models.Model):
+    """Many to Many intermidiate table."""
+    id = models.AutoField(primary_key=True)
+    language_id = models.ForeignKey(Languages, on_delete=models.CASCADE)
+    category_id = models.ForeignKey(Categories, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.category_id.name + " " + self.language_id.name
 
 
 class Articles(CreatedUpdatedFields):
@@ -37,8 +50,11 @@ class Articles(CreatedUpdatedFields):
     image = models.CharField(max_length=32, null=True, blank=True)
     content = SearchVectorField(null=True, blank=True)
     code = models.TextField(null=True, blank=True)
-    category_id = models.ForeignKey(Categories, on_delete=models.RESTRICT)
-    author_id = models.ForeignKey(Author, on_delete=models.RESTRICT)
+    category = models.ForeignKey(
+        CategoriesLanguages,
+        on_delete=models.RESTRICT
+    )
+    author = models.ForeignKey(Author, on_delete=models.RESTRICT)
 
     class Meta:
         ordering = ["title"]

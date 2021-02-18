@@ -29,11 +29,11 @@ class ArticlesAdmin(admin.ModelAdmin):
     form = ArticlesForm
     list_display = ("title",)
     search_fields = ("title", "content")
-    # list_filter = (
-    #     "category_id__name",
-    #     "category_id__languages",
-    #     "created"
-    # )
+    list_filter = (
+        "created",
+        "category__language_id",
+        "category__category_id"
+    )
 
 
 admin.site.register(Languages, LanguagesAdmin)
