@@ -92,14 +92,14 @@ Implementing the database via Django ORM.
     Implementing the classes of models.
 
 Setting up the Django admin site:
+    Add/Edit/Delete a language.
     Add/Edit/Delete a category.
-    Add/Edit/Delete a subcategory.
     Add/Edit/Delete an article.
         Add/Edit/Delete a text.
         Add/Edit/Delete an image.
         Add/Edit/Delete a code.
+    Sort by language.
     Sort by category.
-    Sort by subcategory.
     Sort by alphabet.
     Sort by publication date.
     Search by word.
