@@ -19,6 +19,7 @@ CREATE TABLE categories (
 
 
 CREATE TABLE languages_categories (
+    id SERIAL               NOT NULL,
     language_id SMALLSERIAL NOT NULL,
     category_id SMALLSERIAL NOT NULL,
 
@@ -35,12 +36,12 @@ CREATE TABLE articles (
     code TEXT                               DEFAULT NULL,
     creation_date TIMESTAMP WITH TIME ZONE  NOT NULL DEFAULT current_timestamp,
     last_update TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT current_timestamp,
-    category_id SMALLSERIAL                 NOT NULL,
-    author_id SMALLSERIAL                   NOT NULL,
+    category SMALLSERIAL                    NOT NULL,
+    author SMALLSERIAL                      NOT NULL,
 
     PRIMARY KEY (article_id),
-    FOREIGN KEY (category_id) REFERENCES categories (category_id) ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (author_id) REFERENCES author (author_id) ON DELETE RESTRICT 
+    FOREIGN KEY (category) REFERENCES languages_categories (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (author) REFERENCES author (author_id) ON DELETE RESTRICT 
 );
 
 

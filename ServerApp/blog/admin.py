@@ -1,26 +1,18 @@
 from django.contrib import admin
 
+from core.admin import CategoriesLanguagesBaseAdmin
 from .forms import ArticlesForm
 from .models import (
-    Languages, Categories, Articles, CategoriesLanguages
+    Languages, Categories, Articles
 )
 
 
-class CategoriesLanguagesInline(admin.TabularInline):
-    model = CategoriesLanguages
-    extra = 1
-
-
-class LanguagesAdmin(admin.ModelAdmin):
+class LanguagesAdmin(CategoriesLanguagesBaseAdmin):
     """Custom settings."""
-    list_display = ("name",)
-    inlines = (CategoriesLanguagesInline,)
 
 
-class CategoriesAdmin(admin.ModelAdmin):
+class CategoriesAdmin(CategoriesLanguagesBaseAdmin):
     """Custom settings"""
-    list_display = ("name", )
-    inlines = (CategoriesLanguagesInline,)
     list_filter = ("languages",)
 
 
