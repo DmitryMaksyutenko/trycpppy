@@ -100,7 +100,6 @@ Setting up the Django admin site:
         Add/Edit/Delete a code.
     Sort by language.
     Sort by category.
-    Sort by alphabet.
     Sort by publication date.
     Search by word.
 

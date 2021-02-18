@@ -10,6 +10,9 @@ class Languages(CreatedUpdatedFields):
     language_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
 
+    class Meta:
+        ordering = ["name"]
+
     def __str__(self) -> str:
         return self.name
 
@@ -19,6 +22,9 @@ class Categories(CreatedUpdatedFields):
     category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=56)
     languages = models.ManyToManyField(Languages)
+
+    class Meta:
+        ordering = ["name"]
 
     def __str__(self) -> str:
         return self.name
@@ -33,6 +39,9 @@ class Articles(CreatedUpdatedFields):
     code = models.TextField(null=True, blank=True)
     category_id = models.ForeignKey(Categories, on_delete=models.RESTRICT)
     author_id = models.ForeignKey(Author, on_delete=models.RESTRICT)
+
+    class Meta:
+        ordering = ["title"]
 
     def __str__(self) -> str:
         return self.title
