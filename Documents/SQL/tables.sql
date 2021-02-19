@@ -18,7 +18,7 @@ CREATE TABLE categories (
 );
 
 
-CREATE TABLE languages_categories (
+CREATE TABLE categories_languages (
     id SERIAL               NOT NULL,
     language_id SMALLSERIAL NOT NULL,
     category_id SMALLSERIAL NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE articles (
     author SMALLSERIAL                      NOT NULL,
 
     PRIMARY KEY (article_id),
-    FOREIGN KEY (category) REFERENCES languages_categories (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (category) REFERENCES categories_languages (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (author) REFERENCES author (author_id) ON DELETE RESTRICT 
 );
 

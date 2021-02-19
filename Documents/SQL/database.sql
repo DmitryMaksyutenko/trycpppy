@@ -1,1 +1,1 @@
-CREATE DATABASE trycpppy WITH OWNER trycpppy_role;
+CREATE DATABASE trycpppy WITH OWNER role;
