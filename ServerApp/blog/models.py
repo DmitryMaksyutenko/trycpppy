@@ -49,7 +49,8 @@ class Articles(CreatedUpdatedFields):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
     image = models.CharField(max_length=32, null=True, blank=True)
-    content = SearchVectorField(null=True, blank=True)
+    content = models.TextField(null=True, blank=True)
+    content_vector = SearchVectorField(null=True, blank=True)
     code = models.TextField(null=True, blank=True)
     category = models.ForeignKey(
         CategoriesLanguages,
@@ -61,7 +62,7 @@ class Articles(CreatedUpdatedFields):
         ordering = ["title"]
         indexes = (
             models.Index(fields=("category", "title")),
-            GinIndex(fields=("content",))
+            GinIndex(fields=("content_vector",))
         )
 
     def __str__(self) -> str:
