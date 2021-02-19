@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from core.admin import CategoriesLanguagesBaseAdmin
-from .forms import ArticlesForm
 from .models import (
     Languages, Categories, Articles
 )
@@ -18,8 +17,8 @@ class CategoriesAdmin(CategoriesLanguagesBaseAdmin):
 
 class ArticlesAdmin(admin.ModelAdmin):
     """Custom settings"""
-    form = ArticlesForm
     list_display = ("title",)
+    exclude = ("content_vector",)
     search_fields = ("title", "content")
     list_filter = (
         "created",
