@@ -1,5 +1,5 @@
 CREATE INDEX article_category_id ON articles
-USING BTREE (category_id);
+USING BTREE (category);
 
 CREATE INDEX article_title ON articles
 USING BTREE (title);

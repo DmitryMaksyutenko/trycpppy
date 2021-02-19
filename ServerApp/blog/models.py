@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.search import SearchVectorField
+from django.contrib.postgres.indexes import GinIndex
 
 from core.models import CreatedUpdatedFields
 from roles.models import Author
@@ -58,6 +59,10 @@ class Articles(CreatedUpdatedFields):
 
     class Meta:
         ordering = ["title"]
+        indexes = (
+            models.Index(fields=("category", "title")),
+            GinIndex(fields=("content",))
+        )
 
     def __str__(self) -> str:
         return self.title
