@@ -1,5 +1,5 @@
 Create a single page application. A web blog-notebook.
-The main goal of which is a simple explanation of C++, Python
+The main goal of which is a simple explanation of JavaScript, Python
 program languages, and related themes. The articles
 answer the questions what for and how. It contains custom
 images and code examples. The client application must have
@@ -16,7 +16,7 @@ Find the ways to make money from the web application.
 
 Domain:
 By a domain from namecheap.com
-trycpppy.com 9$/yar.
+tryjspy.com 9$/yar.
 
 Cloud.
 DigitalOcean.com
@@ -122,9 +122,9 @@ Using the Django-REST-framework implement the API.
     URL path "python/categories/" Returns the JSON {"categories": ["category 1", "category 2", ...]}
     URL path "python/category/articles/" Returns the JSON {"articles": ["title 1", "title 2", ...]}
     URL path "python/category/article/some-title" Returns the JSON {"title": "some-title", "text": "...", "code": "...", "img": "..." }
-    URL path "cpp/categories/" Returns the JSON {"categories": ["category 1", "category 2", ...]}
-    URL path "cpp/category/articles/" Returns the JSON {"articles": ["title 1", "title 2", ...]}
-    URL path "cpp/category/article/some-title" Returns the JSON {"title": "some-title", "text": "...", "code": "...", "img": "..." }
+    URL path "js/categories/" Returns the JSON {"categories": ["category 1", "category 2", ...]}
+    URL path "js/category/articles/" Returns the JSON {"articles": ["title 1", "title 2", ...]}
+    URL path "js/category/article/some-title" Returns the JSON {"title": "some-title", "text": "...", "code": "...", "img": "..." }
     URL path "about/" Returns the JSON {"fullname": "author-name", "socials": ["link 1", "link 2", ...], "email": "..."}
     URL path "search/" Returns the JSON {"result": ["...", "...", ...]}
 
