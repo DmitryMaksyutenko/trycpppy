@@ -5,7 +5,7 @@ from .models import Author
 
 class AuthorAdmin(admin.ModelAdmin):
     """Custom settings."""
-    list_display = ("user_id",)
+    fields = ("user_id",)
 
 
 admin.site.register(Author, AuthorAdmin)
