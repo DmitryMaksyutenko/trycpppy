@@ -1,16 +1,16 @@
 from django.contrib import admin
 
-from core.admin import CategoriesLanguagesBaseAdmin
+from core.admin import CommonFields
 from .models import (
     Languages, Categories, Articles
 )
 
 
-class LanguagesAdmin(CategoriesLanguagesBaseAdmin):
+class LanguagesAdmin(CommonFields):
     """Custom settings."""
 
 
-class CategoriesAdmin(CategoriesLanguagesBaseAdmin):
+class CategoriesAdmin(CommonFields):
     """Custom settings"""
     list_filter = ("languages",)
 

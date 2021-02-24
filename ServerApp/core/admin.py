@@ -9,7 +9,7 @@ class CategoriesLanguagesInline(admin.TabularInline):
     extra = 1
 
 
-class CategoriesLanguagesBaseAdmin(admin.ModelAdmin):
+class CommonFields(admin.ModelAdmin):
     """Common options for Categories and Languages."""
-    list_display = ["name"]
+    fields = ["name"]
     inlines = [CategoriesLanguagesInline]
