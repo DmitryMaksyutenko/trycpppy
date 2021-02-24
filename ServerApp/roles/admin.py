@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Author
+from .models import Authors
 
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -8,4 +8,4 @@ class AuthorAdmin(admin.ModelAdmin):
     fields = ("user_id",)
 
 
-admin.site.register(Author, AuthorAdmin)
+admin.site.register(Authors, AuthorAdmin)

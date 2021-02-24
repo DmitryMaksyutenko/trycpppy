@@ -3,7 +3,7 @@ from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
 
 from core.models import CreatedUpdatedFields
-from roles.models import Author
+from roles.models import Authors
 
 
 class Languages(CreatedUpdatedFields):
@@ -56,7 +56,7 @@ class Articles(CreatedUpdatedFields):
         CategoriesLanguages,
         on_delete=models.RESTRICT
     )
-    author = models.ForeignKey(Author, on_delete=models.RESTRICT)
+    author = models.ForeignKey(Authors, on_delete=models.RESTRICT)
 
     class Meta:
         ordering = ["title"]
