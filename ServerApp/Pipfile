@@ -21,6 +21,7 @@ sqlparse = "==0.4.1"
 toml = "==0.10.2"
 wrapt = "==1.12.1"
 django-grappelli = "*"
+django-admin-honeypot = "*"
 
 [dev-packages]
 

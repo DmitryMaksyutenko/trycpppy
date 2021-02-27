@@ -1,6 +1,12 @@
 from .base import * # noqa
 
 
+DEBUG = False
+
+ADMINS = [
+    ("Dmitry", "up.dimamaksyutenko@gmail.com")
+]
+
 # GENERAL
 # =====================================================================
 SECRET_KEY = env("SECRET_KEY") # noqa
@@ -17,4 +23,16 @@ CACHES = {
 
 # EMAIL
 # =====================================================================
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "1988maksyutenko@gmail.com"
+EMAIL_HOST_PASSWORD = "1Vyjujnjxbt1988"
+
+# REMOVE IN PRODUCTION.
+INSTALLED_APPS += [  # noqa
+    "admin_honeypot",
+]
+ADMIN_HONEYPOT_EMAIL_ADMINS = True
