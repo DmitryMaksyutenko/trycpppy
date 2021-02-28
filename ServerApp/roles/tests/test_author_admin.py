@@ -1,4 +1,3 @@
-from django.http import request
 from django.test import TestCase
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.sites import AdminSite
