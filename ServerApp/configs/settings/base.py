@@ -9,8 +9,7 @@ environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 # =====================================================================
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-APPS_DIR = path.dirname(BASE_DIR)
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 # SECURITY WARNING: don"t run with debug turned on in production!
 # =====================================================================
@@ -25,7 +24,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-LOCALE_PATHS = (path.join(APPS_DIR, "locale"), )
+LOCALE_PATHS = (path.join(BASE_DIR, "locale"), )
 
 # Databases.
 # =====================================================================
@@ -42,7 +41,6 @@ WSGI_APPLICATION = "configs.wsgi.application"
 # Apps.
 # =====================================================================
 INSTALLED_APPS = [
-    "grappelli",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -50,6 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+
+    "grappelli",
+    "admin_honeypot",
 
     # Project applications.
     "core",
@@ -92,6 +93,7 @@ MIDDLEWARE = [
 # CSS, JavaScrip, Images e.t.c.
 # =====================================================================
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 
 # Templates.
@@ -99,7 +101,7 @@ STATIC_URL = "/static/"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [str(APPS_DIR) + "/templates"],
+        "DIRS": [str(BASE_DIR) + "/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -123,27 +125,27 @@ LOGGING = {
         "require_debug_false": {
             "()": "django.utils.log.RequireDebugFalse",
         },
-        # "require_debug_true": {
-        #     "()": "django.utils.log.RequireDebugTrue",
-        # },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
     },
-    # "formatters": {
-    #     "django.server": {
-    #         "()": "django.utils.log.ServerFormatter",
-    #         "format": "[{server_time}] {message}",
-    #         "style": "{",
-    #     }
-    # },
+    "formatters": {
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        }
+    },
     "handlers": {
-        # "console": {
-        #     "level": "INFO",
-        #     "filters": ["require_debug_true"],
-        #     "class": "logging.StreamHandler",
-        # },
+        "console": {
+            "level": "INFO",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        },
         "django.server": {
             "level": "INFO",
             "class": "logging.StreamHandler",
-            # "formatter": "django.server",
+            "formatter": "django.server",
         },
         "mail_admins": {
             "level": "INFO",
@@ -153,13 +155,12 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            # "handlers": ["console", "mail_admins"],
-            "handlers": ["mail_admins"],
+            "handlers": ["console", "mail_admins"],
             "level": "INFO",
         },
         "django.server": {
             "handlers": ["mail_admins"],
-            "level": "INFO",
+            "level": "WARNING",
             "propagate": True,
         },
     }
