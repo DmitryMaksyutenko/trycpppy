@@ -9,8 +9,7 @@ environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 # =====================================================================
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-APPS_DIR = path.dirname(BASE_DIR)
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 # SECURITY WARNING: don"t run with debug turned on in production!
 # =====================================================================
@@ -25,7 +24,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-LOCALE_PATHS = (path.join(APPS_DIR, "locale"), )
+LOCALE_PATHS = (path.join(BASE_DIR, "locale"), )
 
 # Databases.
 # =====================================================================
@@ -50,10 +49,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.postgres",
 
+    "grappelli",
+    "admin_honeypot",
+
     # Project applications.
     "core",
     "roles",
-    "blog"
+    "blog",
 ]
 
 
@@ -91,6 +93,7 @@ MIDDLEWARE = [
 # CSS, JavaScrip, Images e.t.c.
 # =====================================================================
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 
 # Templates.
@@ -98,7 +101,7 @@ STATIC_URL = "/static/"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [str(APPS_DIR) + "/templates"],
+        "DIRS": [str(BASE_DIR) + "/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -106,6 +109,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ],
         },
     },
@@ -144,7 +148,7 @@ LOGGING = {
             "formatter": "django.server",
         },
         "mail_admins": {
-            "level": "ERROR",
+            "level": "INFO",
             "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler"
         }
@@ -155,9 +159,9 @@ LOGGING = {
             "level": "INFO",
         },
         "django.server": {
-            "handlers": ["django.server"],
-            "level": "INFO",
-            "propagate": False,
+            "handlers": ["mail_admins"],
+            "level": "WARNING",
+            "propagate": True,
         },
     }
 }

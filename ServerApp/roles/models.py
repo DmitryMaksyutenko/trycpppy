@@ -2,8 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Author(models.Model):
+class Authors(models.Model):
     """Model contains authors information."""
+
+    class Meta:
+        verbose_name = "Authors"
+        verbose_name_plural = "Authors"
 
     author_id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=132, null=True, blank=True)

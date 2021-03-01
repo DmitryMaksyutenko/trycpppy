@@ -1,3 +1,8 @@
 from .base import * # noqa
 
-DEBUG = False
+DEBUG = env("DEBUG") # noqa
+
+ADMINS = []
+
+INSTALLED_APPS += [  # noqa
+]

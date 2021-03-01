@@ -1,25 +1,27 @@
 from django.contrib import admin
 
-from core.admin import CategoriesLanguagesBaseAdmin
+from core.admin import CommonFields
 from .models import (
     Languages, Categories, Articles
 )
 
 
-class LanguagesAdmin(CategoriesLanguagesBaseAdmin):
+class LanguagesAdmin(CommonFields):
     """Custom settings."""
 
 
-class CategoriesAdmin(CategoriesLanguagesBaseAdmin):
+class CategoriesAdmin(CommonFields):
     """Custom settings"""
     list_filter = ("languages",)
+    list_per_page = 10
 
 
 class ArticlesAdmin(admin.ModelAdmin):
     """Custom settings"""
-    list_display = ("title",)
+    list_display = ("title", "category")
     exclude = ("content_vector",)
     search_fields = ("title", "content_vector")
+    list_per_page = 10
     list_filter = (
         "created",
         "category__language_id",

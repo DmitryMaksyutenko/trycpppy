@@ -6,10 +6,11 @@ from blog.models import CategoriesLanguages
 class CategoriesLanguagesInline(admin.TabularInline):
     """Class for many to many widgets."""
     model = CategoriesLanguages
+    readonly_fields = ("category_id", "language_id")
     extra = 1
 
 
-class CategoriesLanguagesBaseAdmin(admin.ModelAdmin):
+class CommonFields(admin.ModelAdmin):
     """Common options for Categories and Languages."""
-    list_display = ["name"]
+    fields = ["name"]
     inlines = [CategoriesLanguagesInline]
