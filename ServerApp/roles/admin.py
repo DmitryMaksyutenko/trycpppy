@@ -9,6 +9,7 @@ from .services.custom_groups import AuthorGroup
 logger = logging.getLogger(__name__)
 
 
+
 class AuthorAdmin(admin.ModelAdmin):
     """Custom settings."""
     fields = ("description", "social", "user_id")
