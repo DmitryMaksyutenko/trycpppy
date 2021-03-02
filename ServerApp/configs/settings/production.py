@@ -60,4 +60,8 @@ LOGGING = {
             "propagate": True,
         },
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e45fafcdcb1062c0ce3786d5af4b14ad11182f47

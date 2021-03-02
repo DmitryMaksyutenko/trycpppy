@@ -161,7 +161,11 @@ LOGGING = {
             "handlers": ["file_users"],
             "level": "INFO",
         },
+<<<<<<< HEAD
         "blog.admin": {
+=======
+      "blog.admin": {
+>>>>>>> e45fafcdcb1062c0ce3786d5af4b14ad11182f47
             "handlers": ["file_articles"],
             "level": "INFO",
         },

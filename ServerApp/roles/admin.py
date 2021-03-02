@@ -8,6 +8,10 @@ from .services.custom_groups import AuthorGroup
 
 logger = logging.getLogger(__name__)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e45fafcdcb1062c0ce3786d5af4b14ad11182f47
 
 class AuthorAdmin(admin.ModelAdmin):
     """Custom settings."""
@@ -34,6 +38,5 @@ class AuthorAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url="", extra_context=None):
         self.fields = ("description", "social")
         return super().change_view(request, object_id, form_url, extra_context)
-
 
 admin.site.register(Authors, AuthorAdmin)
