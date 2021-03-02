@@ -1,9 +1,13 @@
+import logging
+
 from django.contrib import admin
 
 from core.admin import CommonFields
 from .models import (
     Languages, Categories, Articles
 )
+
+logger = logging.getLogger(__name__)
 
 
 class LanguagesAdmin(CommonFields):
@@ -30,7 +34,20 @@ class ArticlesAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change) -> None:
         obj.content_vector = request.POST["content"]
+        if not change:
+            logger.info(f"Added new article {obj.title}, to {obj.category}.")
+        else:
+            logger.info(f"Updated article {obj.title}, from {obj.category}.")
         super().save_model(request, obj, form, change)
+
+    def delete_queryset(self, request, queryset) -> None:
+        articles = [i.title.strip(".") for i in queryset]
+        logger.info(f"Removed {', '.join(articles)}")
+        return super().delete_queryset(request, queryset)
+
+    def delete_model(self, request, obj) -> None:
+        logger.info(f"{obj.title} removed from {obj.category}.")
+        return super().delete_model(request, obj)
 
 
 admin.site.register(Languages, LanguagesAdmin)

@@ -41,6 +41,8 @@ WSGI_APPLICATION = "configs.wsgi.application"
 # Apps.
 # =====================================================================
 INSTALLED_APPS = [
+    "grappelli",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,7 +51,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.postgres",
 
-    "grappelli",
     "admin_honeypot",
 
     # Project applications.
@@ -116,52 +117,53 @@ TEMPLATES = [
 ]
 
 
-# Logging.
+# Logging
 # =====================================================================
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
-        },
-    },
     "formatters": {
-        "django.server": {
-            "()": "django.utils.log.ServerFormatter",
-            "format": "[{server_time}] {message}",
-            "style": "{",
+        "file_log": {
+            "format":
+                "{levelname} {asctime} '{message}'",
+            "style": "{"
         }
     },
     "handlers": {
-        "console": {
+        "file_users": {
             "level": "INFO",
-            "filters": ["require_debug_true"],
-            "class": "logging.StreamHandler",
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "file_log",
+            "filename": env("LOG_DIR") + "/users.log", # noqa
+            "maxBytes": 1024
         },
-        "django.server": {
+        "file_groups": {
             "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "django.server",
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "file_log",
+            "filename": env("LOG_DIR") + "/groups.log", # noqa
+            "maxBytes": 1024
         },
-        "mail_admins": {
+        "file_articles": {
             "level": "INFO",
-            "filters": ["require_debug_false"],
-            "class": "django.utils.log.AdminEmailHandler"
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "file_log",
+            "filename": env("LOG_DIR") + "/articles.log", # noqa
+            "maxBytes": 1024
         }
     },
     "loggers": {
-        "django": {
-            "handlers": ["console", "mail_admins"],
+        "roles.admin": {
+            "handlers": ["file_groups"],
             "level": "INFO",
         },
-        "django.server": {
-            "handlers": ["mail_admins"],
-            "level": "WARNING",
-            "propagate": True,
+        "core.admin": {
+            "handlers": ["file_users"],
+            "level": "INFO",
+        },
+      "blog.admin": {
+            "handlers": ["file_articles"],
+            "level": "INFO",
         },
     }
 }
