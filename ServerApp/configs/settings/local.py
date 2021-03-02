@@ -58,3 +58,11 @@ LOGGING["loggers"]["blog.admin"]["handlers"].append("debug") # noqa
 LOGGING["loggers"]["roles.admin"]["level"] = "DEBUG" # noqa
 LOGGING["loggers"]["core.admin"]["level"] = "DEBUG" # noqa
 LOGGING["loggers"]["blog.admin"]["level"] = "DEBUG" # noqa
+=======
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "1988maksyutenko@gmail.com"
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")  # noqa
+ADMIN_HONEYPOT_EMAIL_ADMINS = True

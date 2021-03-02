@@ -161,7 +161,7 @@ LOGGING = {
             "handlers": ["file_users"],
             "level": "INFO",
         },
-        "blog.admin": {
+      "blog.admin": {
             "handlers": ["file_articles"],
             "level": "INFO",
         },
