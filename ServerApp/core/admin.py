@@ -1,5 +1,6 @@
 import logging
 import operator
+import re
 
 from django.contrib import admin
 from django.forms.models import model_to_dict
@@ -28,19 +29,22 @@ class CommonFields(admin.ModelAdmin):
 class UserAdmin(BaseUserAdmin):
 
     def save_model(self, request, obj, form, change) -> None:
-        user = User.objects.get(pk=obj.id)
-        if not change:
-            logger.info(f"Created new user {obj}.")
-        else:
+        if change:
+            user = User.objects.get(pk=obj.id)
             if self._is_changed(user, obj):
                 logger.info(
                     f"OLD'{user_to_string(user)}' NEW='{user_to_string(obj)}'")
             else:
                 return
+        else:
+            logger.info(f"Created new user {obj}.")
         super().save_model(request, obj, form, change)
 
-    def _is_changed(self, current, new):
-        """Checking, does current contain the same fields as new."""
+    def _is_changed(self, current, new) -> bool:
+        """
+        Compare, current with new.
+        If they are the same, the user not modified.
+        """
         cur_values = model_to_dict(current).values()
         new_values = model_to_dict(new).values()
         mapped = map(operator.eq, cur_values, new_values)

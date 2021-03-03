@@ -19,10 +19,6 @@ CACHES = {
 
 # Logging
 # =====================================================================
-<<<<<<< HEAD
-=======
-
->>>>>>> e45fafcdcb1062c0ce3786d5af4b14ad11182f47
 LOGGING["formatters"].update({ # noqa
     "console_log": {
         "format":
@@ -62,7 +58,3 @@ LOGGING["loggers"]["blog.admin"]["handlers"].append("debug") # noqa
 LOGGING["loggers"]["roles.admin"]["level"] = "DEBUG" # noqa
 LOGGING["loggers"]["core.admin"]["level"] = "DEBUG" # noqa
 LOGGING["loggers"]["blog.admin"]["level"] = "DEBUG" # noqa
-<<<<<<< HEAD
-=======
-
->>>>>>> e45fafcdcb1062c0ce3786d5af4b14ad11182f47

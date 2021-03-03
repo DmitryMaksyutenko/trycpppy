@@ -8,10 +8,6 @@ from .services.custom_groups import AuthorGroup
 
 logger = logging.getLogger(__name__)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e45fafcdcb1062c0ce3786d5af4b14ad11182f47
 
 class AuthorAdmin(admin.ModelAdmin):
     """Custom settings."""
