@@ -13,6 +13,7 @@ class Languages(CreatedUpdatedFields):
         ordering = ["name"]
         verbose_name = "Languages"
         verbose_name_plural = "Languages"
+        indexes = [models.Index(fields=("uuid",))]
 
     language_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
@@ -28,6 +29,7 @@ class Categories(CreatedUpdatedFields):
         ordering = ["name"]
         verbose_name = "Categories"
         verbose_name_plural = "Categories"
+        indexes = [models.Index(fields=("uuid",))]
 
     category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=56)
@@ -57,10 +59,11 @@ class Articles(CreatedUpdatedFields):
         verbose_name = "Articles"
         verbose_name_plural = "Articles"
         ordering = ["title"]
-        indexes = (
+        indexes = [
             models.Index(fields=("category", "title")),
-            GinIndex(fields=("content_vector",))
-        )
+            GinIndex(fields=("content_vector",)),
+            models.Index(fields=("uuid",))
+        ]
 
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
