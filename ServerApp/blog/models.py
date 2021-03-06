@@ -69,7 +69,7 @@ class Articles(CreatedUpdatedFields):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
     image = models.ImageField(
-        max_length=32, null=True, blank=True, upload_to="imgs/")
+        max_length=132, null=True, blank=True, upload_to="imgs/")
     content = models.TextField(null=True, blank=True)
     content_vector = SearchVectorField(null=True, blank=True)
     code = models.TextField(null=True, blank=True)

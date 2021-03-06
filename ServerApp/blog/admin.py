@@ -35,6 +35,7 @@ class ArticlesAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change) -> None:
         obj.content_vector = request.POST["content"]
+        obj.image.name = obj.category.language_id.name + "/" + obj.image.name
         if change:
             logger.info(f"Updated article {obj.title}, from {obj.category}.")
         else:
