@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
 
@@ -67,7 +68,8 @@ class Articles(CreatedUpdatedFields):
 
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
-    image = models.CharField(max_length=32, null=True, blank=True)
+    image = models.ImageField(
+        max_length=32, null=True, blank=True, upload_to="imgs/")
     content = models.TextField(null=True, blank=True)
     content_vector = SearchVectorField(null=True, blank=True)
     code = models.TextField(null=True, blank=True)

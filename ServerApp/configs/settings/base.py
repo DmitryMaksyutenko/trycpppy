@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
     "admin_honeypot",
     "rest_framework",
+    "PIL",
 
     # Project applications.
     "core",
@@ -93,10 +94,15 @@ MIDDLEWARE = [
 ]
 
 
-# CSS, JavaScrip, Images e.t.c.
+# CSS, JavaScrip.
 # =====================================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
+
+#  Media files.
+# =====================================================================
+MEDIA_ROOT = "/tryjspy_media/"
+MEDIA_URL = "media/"
 
 
 # Templates.

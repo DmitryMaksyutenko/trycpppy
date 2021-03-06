@@ -23,6 +23,7 @@ wrapt = "==1.12.1"
 django-grappelli = "*"
 django-admin-honeypot = "*"
 djangorestframework = "*"
+pillow = "*"
 
 [dev-packages]
 
