@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
 
     "admin_honeypot",
+    "rest_framework",
 
     # Project applications.
     "core",
@@ -167,4 +168,10 @@ LOGGING = {
             "level": "INFO",
         },
     }
+}
+
+# REST framework.
+# =====================================================================
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": []
 }

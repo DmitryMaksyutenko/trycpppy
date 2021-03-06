@@ -60,8 +60,8 @@ LOGGING = {
             "propagate": True,
         },
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> e45fafcdcb1062c0ce3786d5af4b14ad11182f47
+
+# REST framework.
+# =====================================================================
+REST_FRAMEWORK["DEFAULT_PERMISSION_CLASSES"] = "rest_framework.permissions.IsAuthenticated" # noqa

@@ -5,6 +5,7 @@ from configs.settings.base import env
 
 
 urlpatterns = [
+    path("api/", include("api.urls", namespace="api")),
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
     path("grappelli/", include("grappelli.urls")),
     path(env("ADMIN_URL"), admin.site.urls),
