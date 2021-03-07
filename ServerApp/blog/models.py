@@ -1,5 +1,7 @@
+import operator
+
 from django.db import models
-from django.conf import settings
+from django.forms.models import model_to_dict
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
 
@@ -68,8 +70,7 @@ class Articles(CreatedUpdatedFields):
 
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
-    image = models.ImageField(
-        max_length=132, null=True, blank=True, upload_to="imgs/")
+    image = models.ImageField(max_length=132, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
     content_vector = SearchVectorField(null=True, blank=True)
     code = models.TextField(null=True, blank=True)
@@ -81,3 +82,18 @@ class Articles(CreatedUpdatedFields):
 
     def __str__(self) -> str:
         return self.title
+
+    def __eq__(self, obj) -> bool:
+        """The Article objects are equale if their fields are equal."""
+        curr = model_to_dict(self).values()
+        new = model_to_dict(obj).values()
+        if False in map(operator.eq, curr, new):
+            return False
+        return True
+
+    def __ne__(self, obj) -> bool:
+        return not self.__eq__(obj)
+
+    def save(self, *args, **kwargs) -> None:
+        self.content_vector = self.content
+        super().save(*args, **kwargs)

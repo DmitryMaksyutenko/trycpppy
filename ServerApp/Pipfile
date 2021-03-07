@@ -24,6 +24,7 @@ django-grappelli = "*"
 django-admin-honeypot = "*"
 djangorestframework = "*"
 pillow = "*"
+mock = "*"
 
 [dev-packages]
 

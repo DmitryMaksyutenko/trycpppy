@@ -101,7 +101,7 @@ STATIC_ROOT = BASE_DIR / "static"
 
 #  Media files.
 # =====================================================================
-MEDIA_ROOT = "/tryjspy_media/"
+MEDIA_ROOT = "/tryjspy_media/imgs/"
 MEDIA_URL = "media/"
 
 
@@ -169,7 +169,7 @@ LOGGING = {
             "handlers": ["file_users"],
             "level": "INFO",
         },
-      "blog.admin": {
+       "blog.admin": {
             "handlers": ["file_articles"],
             "level": "INFO",
         },

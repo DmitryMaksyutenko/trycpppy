@@ -35,4 +35,5 @@ class AuthorAdmin(admin.ModelAdmin):
         self.fields = ("description", "social")
         return super().change_view(request, object_id, form_url, extra_context)
 
+
 admin.site.register(Authors, AuthorAdmin)

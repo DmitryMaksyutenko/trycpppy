@@ -34,13 +34,17 @@ class ArticlesAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change) -> None:
-        obj.content_vector = request.POST["content"]
-        obj.image.name = obj.category.language_id.name + "/" + obj.image.name
         if change:
-            logger.info(f"Updated article {obj.title}, from {obj.category}.")
+            self._on_change(obj)
         else:
             logger.info(f"Added new article {obj.title}, to {obj.category}.")
         super().save_model(request, obj, form, change)
+
+    def _on_change(self, new):
+        """Actions if change argument from save_model method is True."""
+        curr = Articles.objects.get(pk=new.article_id)
+        if curr != new:
+            logger.info(f"Updated article {new.title}, from {new.category}.")
 
     def delete_queryset(self, request, queryset) -> None:
         articles = [i.title.strip(".") for i in queryset]
