@@ -4,6 +4,7 @@ from django.db import models
 from django.forms.models import model_to_dict
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
+from django.core.validators import FileExtensionValidator
 
 from core.models import CreatedUpdatedFields
 from roles.models import Authors
@@ -70,7 +71,12 @@ class Articles(CreatedUpdatedFields):
 
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
-    image = models.ImageField(max_length=132, null=True, blank=True)
+    image = models.FileField(
+        max_length=132,
+        null=True,
+        blank=True,
+        validators=[FileExtensionValidator(["svg"])]
+    )
     content = models.TextField(null=True, blank=True)
     content_vector = SearchVectorField(null=True, blank=True)
     code = models.TextField(null=True, blank=True)
