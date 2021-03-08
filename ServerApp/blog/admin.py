@@ -43,6 +43,8 @@ class ArticlesAdmin(admin.ModelAdmin):
     def _on_change(self, new):
         """Actions if change argument from save_model method is True."""
         curr = Articles.objects.get(pk=new.article_id)
+        if not new.image:
+            curr.image.delete()
         if curr != new:
             logger.info(f"Updated article {new.title}, from {new.category}.")
 

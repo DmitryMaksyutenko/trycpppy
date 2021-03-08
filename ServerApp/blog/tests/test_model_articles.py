@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import mock
 
@@ -54,9 +55,6 @@ class TestArticles(TestCase):
             category=CategoriesLanguages.objects.get(pk=1)
         )
 
-    # def tearDown(self) -> None:
-    #     os.remove(self.IMG_PATH)
-
     def test_artileces_equal(self):
         curr = Articles.objects.get(pk=1)
         new = Articles.objects.get(pk=1)
@@ -92,3 +90,10 @@ class TestArticles(TestCase):
         article.save()
         self.assertTrue(article.content)
         self.assertTrue(article.content_vector)
+
+    def test_delete_article_image(self):
+        article = Articles.objects.get(pk=1)
+        img_dir = Path(article.image.path)
+        self.assertTrue(img_dir.exists())
+        article.delete()
+        self.assertFalse(img_dir.exists())

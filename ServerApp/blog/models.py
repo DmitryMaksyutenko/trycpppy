@@ -106,3 +106,7 @@ class Articles(CreatedUpdatedFields):
     def save(self, *args, **kwargs) -> None:
         self.content_vector = self.content
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        return super().delete(*args, **kwargs)
