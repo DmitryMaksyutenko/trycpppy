@@ -100,6 +100,9 @@ class Articles(CreatedUpdatedFields):
     def __ne__(self, obj) -> bool:
         return not self.__eq__(obj)
 
+    def __hash__(self) -> int:
+        return super().__hash__()
+
     def save(self, *args, **kwargs) -> None:
         self.content_vector = self.content
         super().save(*args, **kwargs)

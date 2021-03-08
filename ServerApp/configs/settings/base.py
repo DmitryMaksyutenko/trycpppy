@@ -101,7 +101,7 @@ STATIC_ROOT = BASE_DIR / "static"
 
 #  Media files.
 # =====================================================================
-MEDIA_ROOT = "/tryjspy_media/imgs/"
+MEDIA_ROOT = env("MEDIA_ROOT")
 MEDIA_URL = "media/"
 
 
