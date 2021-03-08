@@ -52,11 +52,14 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
 
     "admin_honeypot",
+    "rest_framework",
+    "PIL",
 
     # Project applications.
     "core",
     "roles",
     "blog",
+    "api",
 ]
 
 
@@ -91,10 +94,15 @@ MIDDLEWARE = [
 ]
 
 
-# CSS, JavaScrip, Images e.t.c.
+# CSS, JavaScrip.
 # =====================================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
+
+#  Media files.
+# =====================================================================
+MEDIA_ROOT = env("MEDIA_ROOT")
+MEDIA_URL = "media/"
 
 
 # Templates.
@@ -161,9 +169,15 @@ LOGGING = {
             "handlers": ["file_users"],
             "level": "INFO",
         },
-      "blog.admin": {
+       "blog.admin": {
             "handlers": ["file_articles"],
             "level": "INFO",
         },
     }
+}
+
+# REST framework.
+# =====================================================================
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": []
 }

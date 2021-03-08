@@ -53,8 +53,12 @@ LOGGING["loggers"].update({ # noqa
     },
 })
 LOGGING["loggers"]["roles.admin"]["handlers"].append("debug") # noqa
-LOGGING["loggers"]["core.admin"]["handlers"].append("debug") # noqa
-LOGGING["loggers"]["blog.admin"]["handlers"].append("debug") # noqa
 LOGGING["loggers"]["roles.admin"]["level"] = "DEBUG" # noqa
+LOGGING["loggers"]["core.admin"]["handlers"].append("debug") # noqa
 LOGGING["loggers"]["core.admin"]["level"] = "DEBUG" # noqa
+LOGGING["loggers"]["blog.admin"]["handlers"].append("debug") # noqa
 LOGGING["loggers"]["blog.admin"]["level"] = "DEBUG" # noqa
+
+# REST framework.
+# =====================================================================
+REST_FRAMEWORK["DEFAULT_PERMISSION_CLASSES"] = "rest_framework.permissions.AllowAny" # noqa

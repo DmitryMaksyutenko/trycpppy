@@ -1,6 +1,10 @@
+import operator
+
 from django.db import models
+from django.forms.models import model_to_dict
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
+from django.core.validators import FileExtensionValidator
 
 from core.models import CreatedUpdatedFields
 from roles.models import Authors
@@ -13,6 +17,7 @@ class Languages(CreatedUpdatedFields):
         ordering = ["name"]
         verbose_name = "Languages"
         verbose_name_plural = "Languages"
+        indexes = [models.Index(fields=("uuid",))]
 
     language_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
@@ -28,6 +33,7 @@ class Categories(CreatedUpdatedFields):
         ordering = ["name"]
         verbose_name = "Categories"
         verbose_name_plural = "Categories"
+        indexes = [models.Index(fields=("uuid",))]
 
     category_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=56)
@@ -57,14 +63,20 @@ class Articles(CreatedUpdatedFields):
         verbose_name = "Articles"
         verbose_name_plural = "Articles"
         ordering = ["title"]
-        indexes = (
+        indexes = [
             models.Index(fields=("category", "title")),
-            GinIndex(fields=("content_vector",))
-        )
+            GinIndex(fields=("content_vector",)),
+            models.Index(fields=("uuid",))
+        ]
 
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=56)
-    image = models.CharField(max_length=32, null=True, blank=True)
+    image = models.FileField(
+        max_length=132,
+        null=True,
+        blank=True,
+        validators=[FileExtensionValidator(["svg"])]
+    )
     content = models.TextField(null=True, blank=True)
     content_vector = SearchVectorField(null=True, blank=True)
     code = models.TextField(null=True, blank=True)
@@ -76,3 +88,25 @@ class Articles(CreatedUpdatedFields):
 
     def __str__(self) -> str:
         return self.title
+
+    def __eq__(self, obj) -> bool:
+        """The Article objects are equale if their fields are equal."""
+        curr = model_to_dict(self).values()
+        new = model_to_dict(obj).values()
+        if False in map(operator.eq, curr, new):
+            return False
+        return True
+
+    def __ne__(self, obj) -> bool:
+        return not self.__eq__(obj)
+
+    def __hash__(self) -> int:
+        return super().__hash__()
+
+    def save(self, *args, **kwargs) -> None:
+        self.content_vector = self.content
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        return super().delete(*args, **kwargs)

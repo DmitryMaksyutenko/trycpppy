@@ -23,6 +23,7 @@ class CategoriesAdmin(CommonFields):
 class ArticlesAdmin(admin.ModelAdmin):
     """Custom settings"""
     list_display = ("title", "category")
+    readonly_fields = ("uuid",)
     exclude = ("content_vector",)
     search_fields = ("title", "content_vector")
     list_per_page = 10
@@ -33,12 +34,19 @@ class ArticlesAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change) -> None:
-        obj.content_vector = request.POST["content"]
-        if not change:
-            logger.info(f"Added new article {obj.title}, to {obj.category}.")
+        if change:
+            self._on_change(obj)
         else:
-            logger.info(f"Updated article {obj.title}, from {obj.category}.")
+            logger.info(f"Added new article {obj.title}, to {obj.category}.")
         super().save_model(request, obj, form, change)
+
+    def _on_change(self, new):
+        """Actions if change argument from save_model method is True."""
+        curr = Articles.objects.get(pk=new.article_id)
+        if not new.image:
+            curr.image.delete()
+        if curr != new:
+            logger.info(f"Updated article {new.title}, from {new.category}.")
 
     def delete_queryset(self, request, queryset) -> None:
         articles = [i.title.strip(".") for i in queryset]
