@@ -78,37 +78,37 @@ Caching.
 SERVER ----------------------------------------------------------
 
 Database schema development.
-    Implement the languages.
-    Implement the categories.
-    Implement the articles.
-    Implement the about.
-    Implement the author.
-    Implementation must be flexible and extensible.
-    Full-text search by words/phrases in the articles text.
-    Define the table relations.
-    Defining the indexes.
++    Implement the languages.
++    Implement the categories.
++    Implement the articles.
++    Implement the about.
++    Implement the author.
++    Implementation must be flexible and extensible.
++    Full-text search by words/phrases in the articles text.
++    Define the table relations.
++    Defining the indexes.
 
 Implementing the database via Django ORM.
-    Implementing the classes of models.
++    Implementing the classes of models.
 
 Setting up the Django admin site:
-    Add/Edit/Delete a language.
-    Add/Edit/Delete a category.
-    Add/Edit/Delete an article.
-        Add/Edit/Delete a text.
-        Add/Edit/Delete an image.
-        Add/Edit/Delete a code.
-    Sort by language.
-    Sort by category.
-    Sort by publication date.
-    Search by word.
++    Add/Edit/Delete a language.
++    Add/Edit/Delete a category.
++    Add/Edit/Delete an article.
++        Add/Edit/Delete a text.
++        Add/Edit/Delete an image.
++        Add/Edit/Delete a code.
++    Sort by language.
++    Sort by category.
++    Sort by publication date.
++    Search by word.
 
 Implementation of the business logic.
     Menu.
     Retrieving data from the database and sending it to the client.
         Retrieving the list of languages.
         Retrieving the list of categories.
-        Retrieving the list of articles from the subcategory.
+        Retrieving the list of articles.
         Retrieving the article.
         Retrieving the about.
         Search by article title.
@@ -118,15 +118,104 @@ Implementation of the business logic.
         Cache the main page with Django per-view cache.
 
 Using the Django-REST-framework implement the API.
-    URL path "/" Returned by Nginx.
-    URL path "python/categories/" Returns the JSON {"categories": ["category 1", "category 2", ...]}
-    URL path "python/category/articles/" Returns the JSON {"articles": ["title 1", "title 2", ...]}
-    URL path "python/category/article/some-title" Returns the JSON {"title": "some-title", "text": "...", "code": "...", "img": "..." }
-    URL path "js/categories/" Returns the JSON {"categories": ["category 1", "category 2", ...]}
-    URL path "js/category/articles/" Returns the JSON {"articles": ["title 1", "title 2", ...]}
-    URL path "js/category/article/some-title" Returns the JSON {"title": "some-title", "text": "...", "code": "...", "img": "..." }
-    URL path "about/" Returns the JSON {"fullname": "author-name", "socials": ["link 1", "link 2", ...], "email": "..."}
-    URL path "search/" Returns the JSON {"result": ["...", "...", ...]}
+
+    GET api/languages
+        {
+            "count": number,
+            "languages": [
+                {
+                    "id": uuid,
+                    "name": language name,
+                    "link": "/languages/uuid"
+                },
+                {
+                    "id": uuid,
+                    "name": language name,
+                    "link": "/languages/uuid"
+                },
+                ...
+            ]
+        }
+
+    GET api/languages/{uuid}
+        {
+            "name": language name,
+            "categories": [
+                {
+                    "id": uuid,
+                    "name": category name,
+                    "link": "/categories/uuid"
+                },
+                {
+                    "id": uuid,
+                    "name": category name,
+                    "link": "/categories/uuid"
+                },
+                ...
+            ]
+        }
+
+    GET api/categories
+        {
+            "count": number,
+            "categories": [
+                {
+                    "id": uuid,
+                    "name": category name,
+                    "link": "/categories/uuid"
+                },
+                {
+                    "id": uuid,
+                    "name": category name,
+                    "link": "/categories/uuid"
+                },
+                ...
+            ]
+        }
+
+    GET api/categories/{uuid}
+        {
+            "name": category name,
+            "articles": [
+                {
+                    "id": "uuid",
+                    "title": article title,
+                    "link": "/articles/{uuid}"
+                },
+                {
+                    "id": "uuid",
+                    "title": article title,
+                    "link": "/articles/{uuid}"
+                },
+                ...
+            ]
+        }
+
+    GET api/articles
+        {
+            "count": number,
+            "articles": [
+                {
+                    "id": "uuid",
+                    "title": article title,
+                    "link": "/articles/{uuid}"
+                },
+                {
+                    "id": "uuid",
+                    "title": article title,
+                    "link": "/articles/{uuid}"
+                },
+                ...
+            ]
+        }
+
+    GET api/articles/{uuid}
+        {
+            "title": article title,
+            "content" text,
+            "image": link,
+            "code": text
+        }
 
 Setting up the Django logging system.
     CRITICAL.

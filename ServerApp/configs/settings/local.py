@@ -61,4 +61,4 @@ LOGGING["loggers"]["blog.admin"]["level"] = "DEBUG" # noqa
 
 # REST framework.
 # =====================================================================
-REST_FRAMEWORK["DEFAULT_PERMISSION_CLASSES"] = "rest_framework.permissions.AllowAny" # noqa
+REST_FRAMEWORK["DEFAULT_PERMISSION_CLASSES"] = ("rest_framework.permissions.AllowAny", ) # noqa

@@ -1,5 +1,10 @@
 from django.urls import path
 
-app_name = "set application name"
 
-urlpatterns = []
+from .views.languages import RetrieveLanguages
+
+app_name = "api"
+
+urlpatterns = [
+    path("languages", RetrieveLanguages.as_view(), name="all_languages"),
+]
