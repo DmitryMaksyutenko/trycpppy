@@ -7,4 +7,9 @@ app_name = "api"
 
 urlpatterns = [
     path("languages", RetrieveLanguages.as_view(), name="all_languages"),
+    path(
+        "languages/<uuid:uuid>",
+        RetrieveLanguages.as_view(),
+        name="all_languages"
+    ),
 ]

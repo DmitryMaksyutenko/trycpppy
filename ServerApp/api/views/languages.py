@@ -7,5 +7,5 @@ from blog.services.languages_services import LanguagesServeices
 class RetrieveLanguages(APIView):
     def get(self, request, *args, **kwargs):
         service = LanguagesServeices()
-        data = service.get_all_languages()
+        data = service.get_all_languages(request)
         return Response(data)
