@@ -107,7 +107,7 @@ Implementation of the business logic.
     Menu.
     Retrieving data from the database and sending it to the client.
 +        Retrieving the list of languages.
-        Retrieving the list of categories.
++        Retrieving the list of categories.
         Retrieving the list of articles.
         Retrieving the article.
         Retrieving the about.
@@ -124,12 +124,10 @@ Using the Django-REST-framework implement the API.
             "count": number,
             "languages": [
                 {
-                    "id": uuid,
                     "name": language name,
                     "link": "/languages/uuid"
                 },
                 {
-                    "id": uuid,
                     "name": language name,
                     "link": "/languages/uuid"
                 },
@@ -137,17 +135,15 @@ Using the Django-REST-framework implement the API.
             ]
         }
 
-    GET api/languages/{uuid}
++    GET api/languages/{uuid}
         {
             "name": language name,
             "categories": [
                 {
-                    "id": uuid,
                     "name": category name,
                     "link": "/categories/uuid"
                 },
                 {
-                    "id": uuid,
                     "name": category name,
                     "link": "/categories/uuid"
                 },
@@ -155,17 +151,15 @@ Using the Django-REST-framework implement the API.
             ]
         }
 
-    GET api/categories
++    GET api/categories
         {
             "count": number,
             "categories": [
                 {
-                    "id": uuid,
                     "name": category name,
                     "link": "/categories/uuid"
                 },
                 {
-                    "id": uuid,
                     "name": category name,
                     "link": "/categories/uuid"
                 },
@@ -173,17 +167,15 @@ Using the Django-REST-framework implement the API.
             ]
         }
 
-    GET api/categories/{uuid}
++    GET api/categories/{uuid}
         {
             "name": category name,
             "articles": [
                 {
-                    "id": "uuid",
                     "title": article title,
                     "link": "/articles/{uuid}"
                 },
                 {
-                    "id": "uuid",
                     "title": article title,
                     "link": "/articles/{uuid}"
                 },
@@ -191,17 +183,15 @@ Using the Django-REST-framework implement the API.
             ]
         }
 
-    GET api/articles
++    GET api/articles
         {
             "count": number,
             "articles": [
                 {
-                    "id": "uuid",
                     "title": article title,
                     "link": "/articles/{uuid}"
                 },
                 {
-                    "id": "uuid",
                     "title": article title,
                     "link": "/articles/{uuid}"
                 },
@@ -209,7 +199,7 @@ Using the Django-REST-framework implement the API.
             ]
         }
 
-    GET api/articles/{uuid}
++    GET api/articles/{uuid}
         {
             "title": article title,
             "content" text,

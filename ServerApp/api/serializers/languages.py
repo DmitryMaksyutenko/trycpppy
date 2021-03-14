@@ -1,33 +1,33 @@
 from rest_framework import serializers
-# from rest_framework.reverse import reverse
 
-from blog.models import Languages
-
-
-# class LanguageSerializer(serializers.BaseSerializer):
-
-#     def __init__(self, instance, data, **kwargs):
-#         self.request = kwargs.pop("request")
-#         super().__init__(instance=instance, data=data, **kwargs)
-
-#     def to_representation(self, instance):
-#         return {
-#             "uuid": str(instance.uuid),
-#             "name": instance.name,
-#             "link": reverse(
-#                 "api:all_languages",
-#                 args=[str(instance.uuid)],
-#                 request=self.request
-#             )
-#         }
+from .categories import CategoriesSerializer
+from blog.models import Categories, Languages
 
 
-class LanguageSerializer(serializers.HyperlinkedModelSerializer):
+class LanguageSerializer(serializers.BaseSerializer):
+
+    def __init__(self, instance, data, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(instance=instance, data=data, **kwargs)
+
+    def to_representation(self, instance):
+        obj = Categories.objects.filter(
+            languages=instance.language_id)
+        serialized = CategoriesSerializer(
+            obj, many=True, context={"request": self.request}
+        )
+        return {
+            "name": instance.name,
+            "categories": serialized.data
+        }
+
+
+class LanguagesSerializer(serializers.ModelSerializer):
     link = serializers.HyperlinkedIdentityField(
-        view_name='api:all_languages',
-        lookup_field='uuid'
+        view_name="api:language",
+        lookup_field="uuid"
     )
 
     class Meta:
         model = Languages
-        fields = ("uuid", "name", "link")
+        fields = ("name", "link")

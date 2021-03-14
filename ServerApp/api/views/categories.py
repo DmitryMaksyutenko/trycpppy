@@ -1,18 +1,20 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from blog.services.languages import LanguagesServeices
+from blog.services.categories import CategoriesServices
 
 
-class LanguagesView(APIView):
+class CategoriesView(APIView):
+
     def get(self, request, *args, **kwargs):
-        service = LanguagesServeices(request)
+        service = CategoriesServices(request)
         data = service.get_all()
         return Response(data)
 
 
-class LanguageView(APIView):
+class CategoryView(APIView):
+
     def get(self, request, *args, **kwargs):
-        service = LanguagesServeices(request)
+        service = CategoriesServices(request)
         data = service.get_one()
         return Response(data)
