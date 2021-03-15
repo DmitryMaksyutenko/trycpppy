@@ -2,23 +2,22 @@ from rest_framework import serializers
 
 from .articles import ArticlesSerializer
 from blog.models import Categories, Articles
+from api.mixins import RelatedMixin
 
 
-class CategorySerializer(serializers.BaseSerializer):
+class CategorySerializer(RelatedMixin, serializers.BaseSerializer):
 
     def __init__(self, instance, data, **kwargs):
         self.request = kwargs.pop("request")
+        self.serializer = ArticlesSerializer
+        self.queryset = Articles.objects.filter(
+            category__category_id=instance.category_id)
         super().__init__(instance=instance, data=data, **kwargs)
 
     def to_representation(self, instance):
-        obj = Articles.objects.filter(
-            category__category_id=instance.category_id)
-        serialized = ArticlesSerializer(
-            obj, many=True, context={"request": self.request})
-
         return {
             "name": instance.name,
-            "articles": serialized.data
+            "articles": self.related_serialized_data()
         }
 
 

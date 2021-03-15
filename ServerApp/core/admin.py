@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class CategoriesLanguagesInline(admin.TabularInline):
     """Class for many to many widgets."""
     model = CategoriesLanguages
-    readonly_fields = ("category_id", "language_id")
+    fields = ("category_id", "language_id")
     extra = 1
 
 
