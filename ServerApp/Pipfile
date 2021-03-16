@@ -25,6 +25,7 @@ django-admin-honeypot = "*"
 djangorestframework = "*"
 pillow = "*"
 mock = "*"
+coverage = "*"
 
 [dev-packages]
 
