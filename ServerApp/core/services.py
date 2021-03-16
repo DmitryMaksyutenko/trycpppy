@@ -1,14 +1,11 @@
-import abc
-
 from django.db.models.query import QuerySet
 from rest_framework.exceptions import NotFound
 
 
-class BlogService(abc.ABC):
+class BlogService:
 
     model = None
 
-    @abc.abstractmethod
     def get_all(self) -> dict:
         pass
 
@@ -24,7 +21,6 @@ class BlogService(abc.ABC):
             self.model_name: obj.data
         }
 
-    @abc.abstractmethod
     def get_one(self) -> dict:
         pass
 
@@ -35,6 +31,4 @@ class BlogService(abc.ABC):
         try:
             return self.model.objects.get(uuid=uuid)
         except self.model.DoesNotExist:
-            raise NotFound
-        except self.model.MultipleObjectsReturned:
             raise NotFound

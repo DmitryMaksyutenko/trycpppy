@@ -106,3 +106,26 @@ class TestArticles(TestCase):
         self.assertTrue(img_dir.exists())
         article.delete()
         self.assertFalse(img_dir.exists())
+
+    def test_repr_str(self):
+        self.assertEqual(str(Articles.objects.get(pk=1)), "test")
+
+
+class TestCategories(TestCase):
+
+    def test_repr_categories(self):
+        category = Categories.objects.create(
+            category_id=1,
+            name="Test category",
+        )
+        self.assertEqual(str(category), "Test category")
+
+
+class TestLanguages(TestCase):
+
+    def test_repr_lanuages(self):
+        language = Languages.objects.create(
+            language_id=1,
+            name="Python",
+        )
+        self.assertEqual(str(language), "Python")
