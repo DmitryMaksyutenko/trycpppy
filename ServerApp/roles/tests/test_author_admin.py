@@ -1,7 +1,7 @@
 import os
-from django.contrib.auth.models import User
 
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import Group
@@ -10,8 +10,14 @@ from django.test.client import RequestFactory
 from roles.models import Authors
 from roles.admin import AuthorAdmin
 from configs.settings.base import env
+from core.tests.definitions import (
+    BASE_TEST_URL, TEST_USERNAME, TEST_EMAIL, TEST_PASS
+)
 
-URL = "http://testserver/" + env("LOG_DIR")
+URL = BASE_TEST_URL + env("LOG_DIR") + "roles/authors/"
+GROUPS_LOG = env("LOG_DIR") + "/groups.log"
+GROUP_NAME = "authors"
+GROUP_LOG_PATH = env("LOG_DIR") + "/groups.log"
 
 
 class MockRequest:
@@ -19,85 +25,72 @@ class MockRequest:
 
 
 class TestAuthorAdmin(TestCase):
+    """Tests for the AuthorAdmin class."""
 
     def setUp(self) -> None:
         self.site = AdminSite()
         self.ma = AuthorAdmin(Authors, self.site)
+        self.user = User.objects.create_user(
+            id=1,
+            username=TEST_USERNAME,
+            password=TEST_PASS,
+            email=TEST_EMAIL
+        )
+        self.author = Authors.objects.create(
+            author_id=1,
+            user_id=self.user
+        )
+        self.group = Group.objects.create(name=GROUP_NAME)
 
     def test_save_model(self):
-        log_size_before = os.stat(env("LOG_DIR") + "/groups.log").st_size
-        Group.objects.create(name="authors")
-        user = User.objects.create_user(
-            id=1,
-            username="Name",
-            password="0000",
-            email="email@example.com"
-        )
-        request = RequestFactory().post(
-            URL + "roles/authors/add/", {"user_id": 1})
-        self.ma.save_model(
-            request,
-            Authors.objects.create(
-                author_id=1,
-                user_id=user
-            ),
-            {},
-            False
-        )
-        log_size_after = os.stat(env("LOG_DIR") + "/groups.log").st_size
+        """Testing, addition to the log record after
+            the addition of the new author.
+        """
+        log_size_before = os.stat(GROUPS_LOG).st_size
+        request = RequestFactory().post(URL + "add/", {"user_id": 1})
+        self.ma.save_model(request, self.author, {}, False)
+        log_size_after = os.stat(GROUPS_LOG).st_size
         self.assertNotEqual(log_size_before, log_size_after)
 
     def test_delete_model(self):
-        log_size_before = os.stat(env("LOG_DIR") + "/groups.log").st_size
-        grorup = Group.objects.create(name="authors")
-        user = User.objects.create_user(
-            id=1,
-            username="Name",
-            password="0000",
-            email="email@example.com"
-        )
-        grorup.user_set.add(user)
-        self.ma.delete_model(
-            URL + "roles/authors/1/delete",
-            user
-        )
-        log_size_after = os.stat(env("LOG_DIR") + "/groups.log").st_size
+        """Testing, addition to the log record after
+            deletion of the author.
+        """
+        log_size_before = os.stat(GROUP_LOG_PATH).st_size
+        self.group.user_set.add(self.user)
+        self.ma.delete_model(URL + "1/delete", self.user)
+        log_size_after = os.stat(GROUP_LOG_PATH).st_size
         self.assertNotEqual(log_size_before, log_size_after)
 
     def test_delete_queruset(self):
-        log_size_before = os.stat(env("LOG_DIR") + "/groups.log").st_size
-        grorup = Group.objects.create(name="authors")
-        user1 = User.objects.create_user(
-            id=1,
-            username="Name",
-            password="0000",
-            email="email@example.com"
-        )
+        """Testing, addition to the log record after
+            deletion of the QuerySet.
+        """
+        log_size_before = os.stat(GROUP_LOG_PATH).st_size
         user2 = User.objects.create_user(
             id=2,
-            username="New",
-            password="0000",
-            email="email@example.com"
+            username=TEST_USERNAME + "_new",
+            password=TEST_PASS,
+            email=TEST_EMAIL
         )
-        grorup.user_set.add(user1)
-        grorup.user_set.add(user2)
-        self.ma.delete_queryset(
-            URL + "roles/authors/1/delete",
-            Authors.objects.all()
-        )
-        log_size_after = os.stat(env("LOG_DIR") + "/groups.log").st_size
+        self.group.user_set.add(self.user)
+        self.group.user_set.add(user2)
+        queryset = Authors.objects.all()
+        self.ma.delete_queryset(URL + "1/delete", queryset)
+        log_size_after = os.stat(GROUP_LOG_PATH).st_size
         self.assertNotEqual(log_size_before, log_size_after)
 
     def test_change_view(self):
-        grorup = Group.objects.create(name="authors")
+        """Testing, changing the visible fields on the view."""
+        self.assertNotEqual(self.ma.fields, ("description", "social"))
         user = User.objects.create_superuser(
             id=1,
-            username="Name",
-            password="0000",
-            email="email@example.com"
+            username=TEST_USERNAME + "_new",
+            password=TEST_PASS,
+            email=TEST_EMAIL
         )
-        grorup.user_set.add(user)
-        request = RequestFactory().get(URL + "roles/author/1/change/")
+        self.group.user_set.add(user)
+        request = RequestFactory().get(URL + "1/change/")
         setattr(request, 'session', 'session')
         setattr(request, '_messages', FallbackStorage(request))
         request.user = user

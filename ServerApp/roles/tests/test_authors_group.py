@@ -1,27 +1,29 @@
 from django.test import TestCase
 from django.contrib.auth.models import User, Group
 
-from roles.models import Authors
 from roles.services.custom_groups import AuthorGroup
+from core.tests.definitions import (
+    TEST_USERNAME, TEST_PASS, TEST_EMAIL
+)
+
+GROUP_NAME = "authors"
 
 
 class TestAuthorGroup(TestCase):
-
-    group_name = Authors.__name__.lower()
-    user_name = "Testuser"
-    user_email = "test@mail.com"
-    user_pass = "0000"
+    """Testing, a wrapper class for addition, and deletion
+        of the user from the group.
+    """
 
     def setUp(self) -> None:
-        User.objects.create(
+        User.objects.create_user(
             id=1,
-            username=self.user_name,
-            email=self.user_email,
-            password=self.user_pass
+            username=TEST_USERNAME,
+            password=TEST_PASS,
+            email=TEST_EMAIL
         )
         Group.objects.create(
             id=1,
-            name=self.group_name
+            name=GROUP_NAME,
         )
 
     def test_add_to_authors(self):
