@@ -5,6 +5,7 @@ from blog.services.categories import CategoriesServices
 
 
 class CategoriesView(APIView):
+    """The view for the list of categories."""
 
     def get(self, request, *args, **kwargs):
         service = CategoriesServices(request)
@@ -13,6 +14,7 @@ class CategoriesView(APIView):
 
 
 class CategoryView(APIView):
+    """The view for the category."""
 
     def get(self, request, *args, **kwargs):
         service = CategoriesServices(request)

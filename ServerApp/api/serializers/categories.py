@@ -6,6 +6,7 @@ from api.mixins import RelatedMixin
 
 
 class CategorySerializer(RelatedMixin, serializers.BaseSerializer):
+    """Serializes the single model instance."""
 
     def __init__(self, instance, data, **kwargs):
         self.request = kwargs.pop("request")
@@ -22,6 +23,8 @@ class CategorySerializer(RelatedMixin, serializers.BaseSerializer):
 
 
 class CategoriesSerializer(serializers.ModelSerializer):
+    """Serializes the multiple objects from the model with links."""
+
     link = serializers.HyperlinkedIdentityField(
         view_name="api:category",
         lookup_field="uuid"

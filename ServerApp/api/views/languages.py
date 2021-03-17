@@ -5,6 +5,8 @@ from blog.services.languages import LanguagesServeices
 
 
 class LanguagesView(APIView):
+    """The view for the list of languages."""
+
     def get(self, request, *args, **kwargs):
         service = LanguagesServeices(request)
         data = service.get_all()
@@ -12,6 +14,8 @@ class LanguagesView(APIView):
 
 
 class LanguageView(APIView):
+    """The view for the language."""
+
     def get(self, request, *args, **kwargs):
         service = LanguagesServeices(request)
         data = service.get_one()

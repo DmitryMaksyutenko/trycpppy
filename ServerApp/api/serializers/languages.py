@@ -6,6 +6,7 @@ from blog.models import Categories, Languages
 
 
 class LanguageSerializer(RelatedMixin, serializers.BaseSerializer):
+    """Serializes the single model instance."""
 
     def __init__(self, instance, data, **kwargs):
         self.request = kwargs.pop("request")
@@ -22,6 +23,8 @@ class LanguageSerializer(RelatedMixin, serializers.BaseSerializer):
 
 
 class LanguagesSerializer(serializers.ModelSerializer):
+    """Serializes the multiple objects from the model with links."""
+
     link = serializers.HyperlinkedIdentityField(
         view_name="api:language",
         lookup_field="uuid"

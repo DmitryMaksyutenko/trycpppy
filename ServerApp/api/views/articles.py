@@ -5,6 +5,8 @@ from blog.services.articles import ArticlesServices
 
 
 class ArticlesView(APIView):
+    """The view for the list of articles."""
+
     def get(self, request, *args, **kwargs):
         service = ArticlesServices(request)
         data = service.get_all()
@@ -12,6 +14,8 @@ class ArticlesView(APIView):
 
 
 class ArticleView(APIView):
+    """The view for the article."""
+
     def get(self, request, *args, **kwargs):
         service = ArticlesServices(request)
         data = service.get_one()
