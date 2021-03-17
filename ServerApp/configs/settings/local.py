@@ -3,6 +3,10 @@ from .base import * # noqa
 
 DEBUG = True
 
+INSTALLED_APPS.append("debug_toolbar")  # noqa
+
+MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")  # noqa
+
 # GENERAL
 # =====================================================================
 SECRET_KEY = env("SECRET_KEY") # noqa
