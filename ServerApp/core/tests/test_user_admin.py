@@ -6,89 +6,83 @@ from django.contrib.admin.sites import AdminSite
 
 from core.admin import UserAdmin
 from configs.settings.base import env
+from core.tests.definitions import (
+    BASE_TEST_URL, TEST_USERNAME, TEST_PASS, TEST_EMAIL
+)
 
-URL = "http://testserver/" + env("ADMIN_URL")
+ADMIN_URL = BASE_TEST_URL + env("ADMIN_URL")
+LOG_URL = env("LOG_DIR") + "/users.log"
 
 
 class TestUserAdmin(TestCase):
 
     def setUp(self) -> None:
-        User.objects.create(
+        self.user = User.objects.create(
             id=4,
-            username="user",
-            password="0000",
-            email="some@mail.com"
+            username=TEST_USERNAME,
+            password=TEST_PASS,
+            email=TEST_EMAIL
         )
-        self.users_log = env("LOG_DIR") + "/users.log"
         self.model = UserAdmin(model=User, admin_site=AdminSite())
 
     def test_new_user(self):
-        "Test, new user creation."
-        size_before = os.stat(self.users_log).st_size
-        self.model.save_model(
-            URL + "auth/add/",
-            User.objects.create(
+        "Testing, new user creation."
+        size_before = os.stat(LOG_URL).st_size
+        new_user = User.objects.create(
                 id=10,
-                username="Newuser",
-                password="0000",
-                email="some@mail.com"
-            ),
-            {},
-            False
+                username=TEST_USERNAME + "_new",
+                password=TEST_PASS,
+                email=TEST_EMAIL
         )
-        size_after = os.stat(self.users_log).st_size
+        self.model.save_model(ADMIN_URL + "auth/add/", new_user, {}, False)
+        size_after = os.stat(LOG_URL).st_size
         self.assertNotEqual(size_before, size_after)
 
     def test_user_change_name_to_same(self):
-        """Test, log record not writes into the log file."""
-        size_before = os.stat(self.users_log).st_size
-        request = RequestFactory().post(URL + "auth/user/4/change/", {})
-        user = User.objects.get(pk=4)
-        self.model.save_model(request, user, form="", change=True)
-        size_after = os.stat(self.users_log).st_size
+        """Testing, log record not writes into the log file."""
+        size_before = os.stat(LOG_URL).st_size
+        request = RequestFactory().post(ADMIN_URL + "auth/user/4/change/", {})
+        self.model.save_model(request, self.user, form="", change=True)
+        size_after = os.stat(LOG_URL).st_size
         self.assertEqual(size_before, size_after)
 
     def test_user_change_name(self):
-        """Test, log record writes into the log file."""
-        size_before = os.stat(self.users_log).st_size
-        request = RequestFactory().post(URL + "auth/user/4/change/", {})
-        user = User.objects.get(pk=4)
-        user.username = "New"
-        self.model.save_model(request, user, form="", change=True)
-        size_after = os.stat(self.users_log).st_size
+        """Testing, log record writes into the log file."""
+        size_before = os.stat(LOG_URL).st_size
+        request = RequestFactory().post(ADMIN_URL + "auth/user/4/change/", {})
+        self.user.username = "New"
+        self.model.save_model(request, self.user, form="", change=True)
+        size_after = os.stat(LOG_URL).st_size
         self.assertNotEqual(size_before, size_after)
 
     def test_user_deletion(self):
-        "Test, user deletion."
-        size_before = os.stat(self.users_log).st_size
-        self.model.delete_model(
-            URL + "auth/user/4/delete/",
-            User.objects.get(pk=4)
-         )
-        size_after = os.stat(self.users_log).st_size
+        "Testing, user deletion."
+        size_before = os.stat(LOG_URL).st_size
+        self.model.delete_model(ADMIN_URL + "auth/user/4/delete/", self.user)
+        size_after = os.stat(LOG_URL).st_size
         self.assertNotEqual(size_before, size_after)
 
     def test_users_deletion(self):
-        "Test, users deletion."
+        "Testing, users deletion."
         User.objects.create(
             id=10,
-            username="Newuser",
-            password="0000",
-            email="some@mail.com"
+            username=TEST_USERNAME + "_new",
+            password=TEST_PASS,
+            email=TEST_EMAIL
         )
-        size_before = os.stat(self.users_log).st_size
+        size_before = os.stat(LOG_URL).st_size
         self.model.delete_queryset(
-            URL + "auth/user/",
+            ADMIN_URL + "auth/user/",
             User.objects.all()
          )
-        size_after = os.stat(self.users_log).st_size
+        size_after = os.stat(LOG_URL).st_size
         self.assertNotEqual(size_before, size_after)
 
     def test_user_change_password(self):
-        """Test, user password changing."""
-        size_before = os.stat(self.users_log).st_size
+        """Testing, user password changing."""
+        size_before = os.stat(LOG_URL).st_size
         request = RequestFactory().post(
-            URL + "auth/user/4/password/", {"password": "1234"})
+            ADMIN_URL + "auth/user/4/password/", {"password": "1234"})
         request.user = User.objects.create_superuser(
             id=1,
             username="Admin",
@@ -100,5 +94,5 @@ class TestUserAdmin(TestCase):
             "1",
             form_url=""
         )
-        size_after = os.stat(self.users_log).st_size
+        size_after = os.stat(LOG_URL).st_size
         self.assertNotEqual(size_before, size_after)
