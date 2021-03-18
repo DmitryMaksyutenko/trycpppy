@@ -10,7 +10,8 @@ from blog.models import (
 )
 from core.tests.definitions import (
     BASE_TEST_URL, TEST_EMAIL, TEST_USERNAME, TEST_PASS,
-    TEST_UUID_A, TEST_UUID_B
+    TEST_UUID_A, TEST_UUID_B, TEST_ARTICLE_CONTENT_A,
+    TEST_ARTICLE_CONTENT_B
 )
 
 URL = BASE_TEST_URL + "api/articles/"
@@ -45,6 +46,7 @@ class TestArticlesView(APITestCase):
         self.article = Articles.objects.create(
             article_id=1,
             title="test title",
+            content=TEST_ARTICLE_CONTENT_A,
             category=self.m2m,
             author=self.author,
             uuid=TEST_UUID_A
@@ -94,5 +96,39 @@ class TestArticlesView(APITestCase):
         """Testing 404 not found."""
         self.article.delete()
         url = reverse("api:articles")
+        response = self.client.get(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_article_search_success(self):
+        """Testing, success search result."""
+        a2 = Articles.objects.create(
+            article_id=2,
+            title="Test Title",
+            content=TEST_ARTICLE_CONTENT_B,
+            category=self.m2m,
+            author=self.author,
+            uuid=TEST_UUID_B
+        )
+        comparable_data = {
+            "count": 2,
+            "articles": [
+                {
+                    "title": self.article.title,
+                    "link": URL + TEST_UUID_A
+                },
+                {
+                    "title": a2.title,
+                    "link": URL + TEST_UUID_B
+                },
+            ]
+        }
+        url = reverse("api:articles_search", kwargs={"value": "Ipsum."})
+        response = self.client.get(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, comparable_data)
+
+    def test_article_serarch_not_found(self):
+        """Testing a failed search."""
+        url = reverse("api:articles_search", kwargs={"value": "No data"})
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

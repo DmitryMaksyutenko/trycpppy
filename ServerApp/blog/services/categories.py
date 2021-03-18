@@ -17,7 +17,7 @@ class CategoriesServices(BlogService):
         obj = self._get_all_or_NotFound()
         serialized = CategoriesSerializer(
             obj, many=True, context={"request": self.request})
-        return self._combine_final_data(serialized)
+        return self.resource_as_collection(serialized)
 
     def get_one(self):
         uuid = self._uuid_from_request()
