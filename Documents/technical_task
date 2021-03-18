@@ -104,14 +104,12 @@ Setting up the Django admin site:
 +    Search by word.
 
 Implementation of the business logic.
-    Menu.
     Retrieving data from the database and sending it to the client.
 +        Retrieving the list of languages.
 +        Retrieving the list of categories.
-        Retrieving the list of articles.
-        Retrieving the article.
++        Retrieving the list of articles.
++        Retrieving the article.
         Retrieving the about.
-        Search by article title.
         Search by words in the article text.
         Sending a new article to LinkedIn and Facebook.
     Cache.
