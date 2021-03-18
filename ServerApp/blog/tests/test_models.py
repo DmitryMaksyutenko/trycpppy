@@ -89,15 +89,6 @@ class TestArticles(TestCase):
         self.assertFalse(self.article.content)
         self.assertFalse(self.article.content_vector)
 
-    def test_add_content(self):
-        """Testing, if content supplied,
-            then content_vector is not empty.
-        """
-        self.article.content = "Test content."
-        self.article.save()
-        self.assertTrue(self.article.content)
-        self.assertTrue(self.article.content_vector)
-
     def test_delete_article_image(self):
         """Testing, the image must be removed from the media
            directory when an article is deleted.

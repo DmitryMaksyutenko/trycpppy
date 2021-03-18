@@ -7,7 +7,7 @@ from .views.categories import (
     CategoriesView, CategoryView
 )
 from .views.articles import (
-    ArticleView, ArticlesView
+    ArticleView, ArticlesView, ArticlesSearchView
 )
 
 app_name = "api"
@@ -19,4 +19,9 @@ urlpatterns = [
     path("categories/<uuid:uuid>", CategoryView.as_view(), name="category"),
     path("articles", ArticlesView.as_view(), name="articles"),
     path("articles/<uuid:uuid>", ArticleView.as_view(), name="article"),
+    path(
+        "articles/search/<str:value>",
+        ArticlesSearchView.as_view(),
+        name="articles_search"
+   ),
 ]

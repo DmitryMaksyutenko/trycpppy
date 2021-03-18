@@ -30,4 +30,11 @@ class Migration(migrations.Migration):
             model_name='articles',
             index=django.contrib.postgres.indexes.GinIndex(fields=['content_vector'], name='blog_articl_content_5419e4_gin'),
         ),
+        migrations.RunSQL(
+            '''
+            CREATE TRIGGER content_vector_update BEFORE INSERT OR UPDATE
+            ON blog_articles FOR EACH ROW EXECUTE PROCEDURE
+            tsvector_update_trigger('content_vector', 'pg_catalog.english', 'content');
+            '''
+        )
     ]

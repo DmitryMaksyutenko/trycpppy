@@ -21,6 +21,12 @@ class Languages(CreatedUpdatedFields):
 
     language_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
+    image = models.FileField(
+        max_length=132,
+        null=True,
+        blank=True,
+        validators=[FileExtensionValidator(["svg"])]
+    )
 
     def __str__(self) -> str:
         return self.name
@@ -102,10 +108,6 @@ class Articles(CreatedUpdatedFields):
 
     def __hash__(self) -> int:
         return super().__hash__()
-
-    def save(self, *args, **kwargs) -> None:
-        self.content_vector = self.content
-        super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         self.image.delete()
