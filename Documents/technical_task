@@ -110,7 +110,7 @@ Implementation of the business logic.
 +        Retrieving the list of articles.
 +        Retrieving the article.
         Retrieving the about.
--        Search by words in the article text.
++        Search by words in the article text.
         Sending a new article to LinkedIn and Facebook.
     Cache.
         Cache the main page with Django per-view cache.
@@ -205,7 +205,7 @@ Using the Django-REST-framework implement the API.
             "code": text
         }
 
--    GET api/articles/search/{string}
++    GET api/articles/search/{string}
         {
             "count": number,
             "articles": [
@@ -223,11 +223,11 @@ Using the Django-REST-framework implement the API.
 
 Setting up the Django logging system.
     CRITICAL.
-        DB connection. Sends email.
+-        DB connection. Sends email.
     ERROR.
         API connections. Sends email.
     WARNING.
         Authentication.
     INFO.
-        General information.
++        General information.
 
