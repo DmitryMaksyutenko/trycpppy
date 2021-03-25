@@ -10,7 +10,7 @@ MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")  # noqa
 # GENERAL
 # =====================================================================
 SECRET_KEY = env("SECRET_KEY") # noqa
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", env("TEST_HOST")]  # noqa
 
 # CACHES
 # =====================================================================
