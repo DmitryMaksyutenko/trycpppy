@@ -27,7 +27,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  layout: ctx => ctx.$device.isMobile ? 'mobile' : 'default'
+}
 </script>
 
 <style>

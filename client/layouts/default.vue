@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1>
+      DEFAULT
+    </h1>
     <Nuxt />
   </div>
 </template>
@@ -30,5 +33,4 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-
 </style>
