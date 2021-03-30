@@ -1,8 +1,5 @@
 <template>
   <div>
-    <h1>
-      DEFAULT
-    </h1>
     <Nuxt />
   </div>
 </template>
@@ -32,5 +29,10 @@ html {
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.main-container {
+  width: 100vw;
+  height: 100vh;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    MOBILE
     <Nuxt />
   </div>
 </template>
@@ -11,5 +10,10 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.main-container {
+  width: 100vw;
+  height: 100vh;
 }
 </style>
